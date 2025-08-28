@@ -40,5 +40,8 @@
 # debug information files
 *.dwo
 
+# Other files
+*.DS_store
+
 # Folders
 build/
