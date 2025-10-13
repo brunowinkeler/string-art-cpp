@@ -11,8 +11,7 @@ add_executable(${PROJ_NAME} ${STRINGART_SOURCES})
 
 target_compile_options(${PROJ_NAME}
   PRIVATE
-    $<$<CONFIG:Debug>:-g>
-    $<$<CONFIG:Release>:-O3>
+    -Wall -Wextra -Wpedantic
 )
 
 # Link libraries
