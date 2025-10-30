@@ -7,7 +7,7 @@ include_directories(
 )
 
 # Create executable
-add_executable(${PROJ_NAME} ${STRINGART_SOURCES})
+add_executable(${PROJ_NAME} WIN32 ${STRINGART_SOURCES})
 
 target_compile_options(${PROJ_NAME}
   PRIVATE
