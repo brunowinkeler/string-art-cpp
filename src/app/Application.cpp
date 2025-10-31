@@ -1,5 +1,6 @@
 #include "Application.hpp"
 #include "SDL3_ttf/SDL_ttf.h"
+#include "utils/LoggerConfig.hpp"
 
 namespace app
 {
@@ -10,14 +11,14 @@ namespace app
         // Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) != true)
         {
-            SDL_Log("SDL_Init failed: %s", SDL_GetError());
+            utils::logger::error("SDL_Init failed: %s", SDL_GetError());
             exit(1);
         }
 
         // SDL_ttf
         if (TTF_Init() != true)
         {
-            SDL_Log("TTF_Init failed: %s", SDL_GetError());
+            utils::logger::error("TTF_Init failed: %s", SDL_GetError());
             TTF_Quit();
             SDL_Quit();
             exit(1);
@@ -26,7 +27,7 @@ namespace app
         m_window = SDL_CreateWindow("SDL3 File Dialog + Image + Path", 960, 640, SDL_WINDOW_RESIZABLE);
         if (!m_window)
         {
-            SDL_Log("CreateWindow failed: %s", SDL_GetError());
+            utils::logger::error("CreateWindow failed: %s", SDL_GetError());
             TTF_Quit();
             SDL_Quit();
             exit(1);
@@ -35,7 +36,7 @@ namespace app
         m_renderer = SDL_CreateRenderer(m_window, nullptr);
         if (!m_renderer)
         {
-            SDL_Log("CreateRenderer failed: %s", SDL_GetError());
+            utils::logger::error("CreateRenderer failed: %s", SDL_GetError());
             SDL_DestroyWindow(m_window);
             TTF_Quit();
             SDL_Quit();

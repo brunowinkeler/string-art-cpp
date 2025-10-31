@@ -2,8 +2,6 @@
 #define APP_APPLICATION_HPP
 
 #include "SDL3/SDL.h"
-#include <string>
-#include <vector>
 
 namespace app
 {

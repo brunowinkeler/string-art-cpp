@@ -1,8 +1,16 @@
 #include "app/Application.hpp"
+#include "utils/LoggerConfig.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
+    utils::LoggerConfig::initialize();
+
+    utils::logger::info("Application started.");
+
     app::Application application;
     application.run();
+
+    utils::LoggerConfig::shutdown();
+
     return 0;
 }
