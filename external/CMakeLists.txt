@@ -20,3 +20,8 @@ add_subdirectory(SDL_ttf EXCLUDE_FROM_ALL)
 include_directories(
     SDL_ttf/include
 )
+
+add_subdirectory(spdlog)
+include_directories(
+    spdlog/include
+)

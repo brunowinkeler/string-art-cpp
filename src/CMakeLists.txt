@@ -2,12 +2,16 @@ file(GLOB_RECURSE STRINGART_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
 )
 
+file(GLOB_RECURSE STRINGART_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
+)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Create executable
-add_executable(${PROJ_NAME} WIN32 ${STRINGART_SOURCES})
+add_executable(${PROJ_NAME} WIN32 ${STRINGART_SOURCES} ${STRINGART_HEADERS})
 
 target_compile_options(${PROJ_NAME}
   PRIVATE
@@ -19,4 +23,5 @@ target_link_libraries(${PROJ_NAME} PRIVATE
     SDL3::SDL3
     SDL3_image::SDL3_image
     SDL3_ttf::SDL3_ttf
+    spdlog::spdlog
 )
