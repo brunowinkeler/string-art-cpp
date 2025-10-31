@@ -10,3 +10,5 @@
 [submodule "external/spdlog"]
 	path = external/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "external/nlohmann_json"]
+	path = external/nlohmann_json

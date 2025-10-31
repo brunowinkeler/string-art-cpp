@@ -3,7 +3,7 @@
 
 int main()
 {
-    utils::LoggerConfig::initialize();
+    utils::LoggerConfig::initialize("logs/log.txt");
 
     utils::logger::info("Application started.");
 

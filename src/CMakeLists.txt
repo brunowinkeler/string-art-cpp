@@ -11,7 +11,7 @@ include_directories(
 )
 
 # Create executable
-add_executable(${PROJ_NAME} WIN32 ${STRINGART_SOURCES} ${STRINGART_HEADERS})
+add_executable(${PROJ_NAME} ${STRINGART_SOURCES} ${STRINGART_HEADERS})
 
 target_compile_options(${PROJ_NAME}
   PRIVATE
@@ -24,4 +24,5 @@ target_link_libraries(${PROJ_NAME} PRIVATE
     SDL3_image::SDL3_image
     SDL3_ttf::SDL3_ttf
     spdlog::spdlog
+    nlohmann_json::nlohmann_json
 )

@@ -7,6 +7,8 @@
 
 namespace utils
 {
+    constexpr const char* LOGGER_NAME = "String Art Logger";
+
     void LoggerConfig::initialize(const std::string& log_file)
     {
         try
@@ -19,7 +21,7 @@ namespace utils
 
             // Combine sinks
             std::vector<spdlog::sink_ptr> sinks{ console_sink, file_sink };
-            auto logger = std::make_shared<spdlog::logger>("String Art Logger", sinks.begin(), sinks.end());
+            auto logger = std::make_shared<spdlog::logger>(LOGGER_NAME, sinks.begin(), sinks.end());
 
             spdlog::set_default_logger(logger);
             spdlog::set_level(spdlog::level::info);

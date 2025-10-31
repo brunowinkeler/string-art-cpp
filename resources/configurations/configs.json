@@ -1,0 +1,8 @@
+{
+    "windowTitle": "String Art Generator",
+    "windowWidth": 960,
+    "windowHeight": 640,
+    "numLinesToDraw": 3000,
+    "numNails": 360,
+    "inputImagePath": "input.png"
+}

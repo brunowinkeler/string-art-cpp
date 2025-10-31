@@ -39,7 +39,6 @@ include_directories(
     SDL_ttf/include
 )
 
-
 # Add spdlog as subdirectory
 add_subdirectory(spdlog)
 include_directories(
@@ -47,6 +46,7 @@ include_directories(
 )
 
 # Add nlohmann as single file include
+add_subdirectory(nlohmann_json)
 include_directories(
-    nlohmann/include
+    nlohmann_json/include
 )

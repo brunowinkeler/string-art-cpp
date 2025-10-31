@@ -13,6 +13,8 @@ namespace app
         void run();
 
     private:
+        void readConfigs();
+
         SDL_Renderer* m_renderer;
         SDL_Window* m_window;
     };
