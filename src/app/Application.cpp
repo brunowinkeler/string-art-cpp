@@ -1,5 +1,6 @@
 #include "Application.hpp"
 #include "SDL3_ttf/SDL_ttf.h"
+#include "app/FontManager.hpp"
 #include "io/ConfigsReader.hpp"
 #include "utils/LoggerConfig.hpp"
 
@@ -50,6 +51,7 @@ namespace app
         }
 
         readConfigs();
+        loadFonts();
     }
 
     Application::~Application()
@@ -59,6 +61,17 @@ namespace app
         SDL_DestroyWindow(m_window);
         TTF_Quit();
         SDL_Quit();
+    }
+
+    void Application::loadFonts()
+    {
+        auto& fontManager = app::FontManager::getInstance();
+        if (!fontManager.loadFont("default", "resources/fonts/arial.ttf", 16))
+        {
+            utils::logger::error("Failed to load default font");
+        }
+
+        utils::logger::info("Fonts loaded successfully");
     }
 
     void Application::readConfigs()
@@ -72,6 +85,8 @@ namespace app
         utils::logger::info("Number of Lines to Draw: {}", configs.numLinesToDraw);
         utils::logger::info("Number of Nails: {}", configs.numNails);
         utils::logger::info("Input Image Path: {}", configs.inputImagePath);
+
+        utils::logger::info("Configurations read successfully");
     }
 
     void Application::run()

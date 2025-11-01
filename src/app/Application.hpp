@@ -14,6 +14,7 @@ namespace app
 
     private:
         void readConfigs();
+        void loadFonts();
 
         SDL_Renderer* m_renderer;
         SDL_Window* m_window;
