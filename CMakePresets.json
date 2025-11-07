@@ -7,18 +7,38 @@
     },
     "configurePresets": [
         {
-            "name": "windows-mingw",
-            "displayName": "Windows (MinGW-w64, static)",
+            "name": "windows-mingw-debug",
+            "displayName": "Windows (MinGW-w64, static, Debug)",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchain-windows.cmake",
-                "STATIC_BUILD": "ON"
+                "STATIC_BUILD": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "linux",
+            "name": "windows-mingw-release",
+            "displayName": "Windows (MinGW-w64, static, Release)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchain-windows.cmake",
+                "STATIC_BUILD": "ON",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Linux (Ninja, Debug)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-release",
             "displayName": "Linux (Ninja, Release)",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
@@ -29,22 +49,38 @@
     ],
     "buildPresets": [
         {
-            "name": "windows-mingw",
-            "configurePreset": "windows-mingw"
+            "name": "windows-mingw-debug",
+            "configurePreset": "windows-mingw-debug"
         },
         {
-            "name": "linux",
-            "configurePreset": "linux"
+            "name": "windows-mingw-release",
+            "configurePreset": "windows-mingw-release"
+        },
+        {
+            "name": "linux-debug",
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "linux-release",
+            "configurePreset": "linux-release"
         }
     ],
     "testPresets": [
         {
-            "name": "windows-mingw",
-            "configurePreset": "windows-mingw"
+            "name": "windows-mingw-debug",
+            "configurePreset": "windows-mingw-debug"
         },
         {
-            "name": "linux",
-            "configurePreset": "linux"
+            "name": "windows-mingw-release",
+            "configurePreset": "windows-mingw-release"
+        },
+        {
+            "name": "linux-debug",
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "linux-release",
+            "configurePreset": "linux-release"
         }
     ]
 }
