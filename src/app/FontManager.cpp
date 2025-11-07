@@ -3,6 +3,28 @@
 
 namespace app
 {
+    bool FontManager::initialize()
+    {
+        // SDL_ttf
+        if (TTF_Init() != true)
+        {
+            utils::logger::error("TTF_Init failed: {}", SDL_GetError());
+            TTF_Quit();
+            return false;
+        }
+        return true;
+    }
+
+    void FontManager::shutdown()
+    {
+        for (auto& pair : m_fonts)
+        {
+            TTF_CloseFont(pair.second);
+        }
+        m_fonts.clear();
+        TTF_Quit();
+    }
+
     FontManager& FontManager::getInstance()
     {
         static FontManager instance;

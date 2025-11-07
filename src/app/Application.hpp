@@ -1,7 +1,8 @@
 #ifndef APP_APPLICATION_HPP
 #define APP_APPLICATION_HPP
 
-#include "SDL3/SDL.h"
+#include "app/FontManager.hpp"
+#include "app/Renderer.hpp"
 
 namespace app
 {
@@ -16,8 +17,8 @@ namespace app
         void readConfigs();
         void loadFonts();
 
-        SDL_Renderer* m_renderer;
-        SDL_Window* m_window;
+        FontManager& m_fontManager;
+        Renderer* m_renderer;
     };
 }
 #endif // APP_APPLICATION_HPP

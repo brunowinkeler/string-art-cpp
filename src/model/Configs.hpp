@@ -7,12 +7,12 @@ namespace model
 {
     struct Configs
     {
-        std::string windowTitle;
-        int windowWidth;
-        int windowHeight;
-        int numLinesToDraw;
-        int numNails;
-        std::string inputImagePath;
+        std::string windowTitle = "String Art Application";
+        int windowWidth = 1280;
+        int windowHeight = 720;
+        int numLinesToDraw = 1000;
+        int numNails = 360;
+        std::string inputImagePath = "input/image.jpg";
     };
 } // namespace model
 

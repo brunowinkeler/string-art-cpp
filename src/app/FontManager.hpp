@@ -12,6 +12,9 @@ namespace app
     public:
         static FontManager& getInstance();
 
+        bool initialize();
+        void shutdown();
+
         bool loadFont(const std::string& fontName, const std::string& fontPath, int fontSize);
         void unloadFont(const std::string& fontName);
         TTF_Font* getFont(const std::string& fontName) const;

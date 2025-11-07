@@ -12,8 +12,7 @@ namespace app
     } // namespace constants
 
     Application::Application()
-        : m_renderer(nullptr)
-        , m_window(nullptr)
+        : m_fontManager(app::FontManager::getInstance())
     {
         // Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) != true)
@@ -22,51 +21,27 @@ namespace app
             exit(1);
         }
 
-        // SDL_ttf
-        if (TTF_Init() != true)
+        if (!m_fontManager.initialize())
         {
-            utils::logger::error("TTF_Init failed: {}", SDL_GetError());
-            TTF_Quit();
-            SDL_Quit();
-            exit(1);
-        }
-
-        m_window = SDL_CreateWindow("SDL3 File Dialog + Image + Path", 960, 640, SDL_WINDOW_RESIZABLE);
-        if (!m_window)
-        {
-            utils::logger::error("CreateWindow failed: {}", SDL_GetError());
-            TTF_Quit();
-            SDL_Quit();
-            exit(1);
-        }
-
-        m_renderer = SDL_CreateRenderer(m_window, nullptr);
-        if (!m_renderer)
-        {
-            utils::logger::error("CreateRenderer failed: {}", SDL_GetError());
-            SDL_DestroyWindow(m_window);
-            TTF_Quit();
-            SDL_Quit();
+            utils::logger::error("FontManager initialization failed");
             exit(1);
         }
 
         readConfigs();
+        auto configs = io::ConfigsReader(constants::CONFIGS_FILE_PATH).getConfigs();
+        m_renderer = new Renderer(configs);
+
         loadFonts();
     }
 
     Application::~Application()
     {
-        // Clean up SDL
-        SDL_DestroyRenderer(m_renderer);
-        SDL_DestroyWindow(m_window);
-        TTF_Quit();
-        SDL_Quit();
+        m_fontManager.shutdown();
     }
 
     void Application::loadFonts()
     {
-        auto& fontManager = app::FontManager::getInstance();
-        if (!fontManager.loadFont("default", "resources/fonts/arial.ttf", 16))
+        if (!m_fontManager.loadFont("default", "resources/fonts/arial.ttf", 16))
         {
             utils::logger::error("Failed to load default font");
         }
@@ -86,7 +61,7 @@ namespace app
         utils::logger::info("Number of Nails: {}", configs.numNails);
         utils::logger::info("Input Image Path: {}", configs.inputImagePath);
 
-        utils::logger::info("Configurations read successfully");
+        utils::logger::info("Configurations read successfully!");
     }
 
     void Application::run()
@@ -103,11 +78,8 @@ namespace app
                     running = false;
                 }
             }
-
-            // Update and render
-            SDL_RenderClear(m_renderer);
-            // Render your application content here
-            SDL_RenderPresent(m_renderer);
         }
+
+        m_renderer->render();
     }
 }
