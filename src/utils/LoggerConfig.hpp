@@ -15,6 +15,6 @@ namespace utils
         static void shutdown();
     };
 
-} // namespace utils
+}
 
 #endif // UTILS_LOGGERCONFIG_HPP

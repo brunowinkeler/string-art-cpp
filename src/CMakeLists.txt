@@ -10,7 +10,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-# Create executable
 add_executable(${PROJ_NAME} ${STRINGART_SOURCES} ${STRINGART_HEADERS})
 
 target_compile_options(${PROJ_NAME}

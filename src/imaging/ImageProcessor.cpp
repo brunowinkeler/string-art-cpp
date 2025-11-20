@@ -20,7 +20,6 @@ namespace imaging
             return { nullptr, SDL_DestroySurface };
         }
 
-        // Create a copy of the surface
         SDL_Surface* graySurface = SDL_ConvertSurface(source, source->format);
         if (!graySurface)
         {
@@ -38,7 +37,6 @@ namespace imaging
         Uint32* pixels = static_cast<Uint32*>(graySurface->pixels);
         int pixelCount = graySurface->w * graySurface->h;
 
-        // SDL3: Use SDL_GetPixelFormatDetails to get format information
         const SDL_PixelFormatDetails* formatDetails =
             SDL_GetPixelFormatDetails(graySurface->format);
 
@@ -104,7 +102,6 @@ namespace imaging
 
                 if (distSquared > radius * radius)
                 {
-                    // Pixel outside circle: set to white
                     pixels[y * surface->w + x] =
                         SDL_MapRGBA(formatDetails, nullptr, 255, 255, 255, 255);
                 }
@@ -175,7 +172,6 @@ namespace imaging
             Uint8 r, g, b, a;
             SDL_GetRGBA(pixel, formatDetails, nullptr, &r, &g, &b, &a);
 
-            // Darken by subtracting value (prevent negative values)
             r = std::max(0, r - amount);
             g = std::max(0, g - amount);
             b = std::max(0, b - amount);

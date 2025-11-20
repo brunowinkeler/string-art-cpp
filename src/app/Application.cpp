@@ -14,7 +14,6 @@ namespace app
     Application::Application()
         : m_fontManager(app::FontManager::getInstance())
     {
-        // Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) != true)
         {
             utils::logger::error("SDL_Init failed: {}", SDL_GetError());
@@ -66,7 +65,6 @@ namespace app
 
     void Application::run()
     {
-        // Main application loop
         bool running = true;
         SDL_Event event;
         while (running)

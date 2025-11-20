@@ -45,3 +45,4 @@
 
 # Folders
 build/
+.vscode/

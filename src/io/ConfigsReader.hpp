@@ -16,6 +16,6 @@ namespace io
     private:
         model::Configs m_configs;
     };
-} // namespace io
+}
 
 #endif // IO_CONFIGSREADER_HPP

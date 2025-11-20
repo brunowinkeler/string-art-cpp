@@ -5,7 +5,6 @@ namespace app
 {
     bool FontManager::initialize()
     {
-        // SDL_ttf
         if (TTF_Init() != true)
         {
             utils::logger::error("TTF_Init failed: {}", SDL_GetError());

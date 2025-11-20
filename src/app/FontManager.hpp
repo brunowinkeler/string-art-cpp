@@ -23,6 +23,6 @@ namespace app
         std::unordered_map<std::string, TTF_Font*> m_fonts;
     };
 
-} // namespace app
+}
 
 #endif // APP_FONT_MANAGER_HPP

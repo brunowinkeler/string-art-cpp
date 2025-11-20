@@ -39,7 +39,7 @@ namespace app
 
     void Renderer::clear()
     {
-        SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255); // black
+        SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
         SDL_RenderClear(m_renderer);
     }
 
@@ -70,10 +70,8 @@ namespace app
 
     void Renderer::render()
     {
-        // Clear and render
         SDL_RenderClear(m_renderer);
 
-        // Render your application content here
         SDL_RenderPresent(m_renderer);
     }
 }
