@@ -3,6 +3,7 @@
 #include "app/FontManager.hpp"
 #include "io/ConfigsReader.hpp"
 #include "utils/LoggerConfig.hpp"
+#include "utils/Resources.hpp"
 
 namespace app
 {
@@ -40,7 +41,7 @@ namespace app
 
     void Application::loadFonts()
     {
-        if (!m_fontManager.loadFont("default", "resources/fonts/arial.ttf", 16))
+        if (!m_fontManager.loadFont("default", std::string(Resources::Fonts::DEFAULT.path), 16))
         {
             utils::logger::error("Failed to load default font");
         }

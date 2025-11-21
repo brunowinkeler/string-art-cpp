@@ -1,20 +1,20 @@
 #ifndef RESOURCES_HPP
 #define RESOURCES_HPP
 
-#include <string>
+#include <string_view>
 
 namespace Resources
 {
     struct FontResource
     {
-        std::string name;
-        std::string path;
+        std::string_view name;
+        std::string_view path;
     };
 
     struct ImageResource
     {
-        std::string name;
-        std::string path;
+        std::string_view name;
+        std::string_view path;
     };
 
     namespace Fonts
@@ -26,9 +26,8 @@ namespace Resources
 
     namespace Images
     {
-        inline constexpr ImageResource LOGO = { "Logo", "resources/images/logo.png" };
-        inline constexpr ImageResource BACKGROUND = { "Background", "resources/images/background.png" };
-        inline constexpr ImageResource ICON = { "Icon", "resources/images/icon.png" };
+        inline constexpr ImageResource SCREW1 = { "Screw1", "resources/images/screw1.png" };
+        inline constexpr ImageResource SCREW2 = { "Screw2", "resources/images/screw2.png" };
     }
 }
 
