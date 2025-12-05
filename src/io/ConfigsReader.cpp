@@ -46,4 +46,26 @@ namespace io
         return m_configs;
     }
 
+    void ConfigsReader::saveConfigsToFile(const std::string& filePath)
+    {
+        nlohmann::json jsonConfig;
+        jsonConfig["windowTitle"] = m_configs.windowTitle;
+        jsonConfig["windowWidth"] = m_configs.windowWidth;
+        jsonConfig["windowHeight"] = m_configs.windowHeight;
+        jsonConfig["numLinesToDraw"] = m_configs.numLinesToDraw;
+        jsonConfig["numNails"] = m_configs.numNails;
+        jsonConfig["inputImagePath"] = m_configs.inputImagePath;
+
+        std::ofstream file(filePath);
+        if (!file.is_open())
+        {
+            utils::logger::error("Failed to open config file for writing: {}", filePath.c_str());
+            return;
+        }
+
+        file << jsonConfig.dump(4); // Pretty print with 4 spaces indentation
+        file.close();
+
+        utils::logger::info("Configurations saved successfully to: {}", filePath.c_str());
+    }
 }

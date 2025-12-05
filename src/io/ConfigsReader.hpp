@@ -12,6 +12,8 @@ namespace io
         explicit ConfigsReader(const std::string& filePath = "resources/configurations/configs.json");
         bool scanConfigsFile(const std::string& filePath);
         const model::Configs& getConfigs() const;
+        void setConfigs(const model::Configs& configs);
+        void saveConfigsToFile(const std::string& filePath);
 
     private:
         model::Configs m_configs;
