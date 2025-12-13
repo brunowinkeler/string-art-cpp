@@ -9,7 +9,7 @@ namespace app
 {
     namespace constants
     {
-        constexpr const char* CONFIGS_FILE_PATH = "resources/configurations/configs.json";
+        constexpr const char* CONFIGS_FILE_PATH = "configs.json";
     } // namespace constants
 
     Application::Application()

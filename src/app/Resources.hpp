@@ -19,15 +19,15 @@ namespace Resources
 
     namespace Fonts
     {
-        inline constexpr FontResource DEFAULT = { "Default", "resources/fonts/Arial.ttf" };
-        inline constexpr FontResource TITLE = { "Title", "resources/fonts/Arial-Bold.ttf" };
-        inline constexpr FontResource MONO = { "Mono", "resources/fonts/Courier.ttf" };
+        inline constexpr FontResource DEFAULT = { "Default", "assets/fonts/arial.ttf" };
+        inline constexpr FontResource TITLE = { "Title", "assets/fonts/arial-bold.ttf" };
+        inline constexpr FontResource MONO = { "Mono", "assets/fonts/courier.ttf" };
     }
 
     namespace Images
     {
-        inline constexpr ImageResource SCREW1 = { "Screw1", "resources/images/screw1.png" };
-        inline constexpr ImageResource SCREW2 = { "Screw2", "resources/images/screw2.png" };
+        inline constexpr ImageResource SCREW1 = { "Screw1", "assets/images/screw1.png" };
+        inline constexpr ImageResource SCREW2 = { "Screw2", "assets/images/screw2.png" };
     }
 }
 
