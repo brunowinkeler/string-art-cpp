@@ -4,20 +4,23 @@
 #include "app/model/Configs.hpp"
 #include <string>
 
-namespace io
+namespace app
 {
-    class ConfigsReader
+    namespace io
     {
-    public:
-        explicit ConfigsReader(const std::string& filePath = "configs.json");
-        bool scanConfigsFile(const std::string& filePath);
-        const model::Configs& getConfigs() const;
-        void setConfigs(const model::Configs& configs);
-        void saveConfigsToFile(const std::string& filePath);
+        class ConfigsReader
+        {
+        public:
+            explicit ConfigsReader(const std::string& filePath = "configs.json");
+            bool ScanConfigsFile(const std::string& filePath);
+            const model::Configs& GetConfigs() const;
+            void SetConfigs(const model::Configs& configs);
+            void SaveConfigsToFile(const std::string& filePath);
 
-    private:
-        model::Configs m_configs;
-    };
+        private:
+            model::Configs m_configs;
+        };
+    }
 }
 
 #endif // IO_CONFIGSREADER_HPP

@@ -3,14 +3,14 @@
 
 int main()
 {
-    utils::LoggerConfig::initialize("logs/log.txt");
+    core::utils::LoggerConfig::Initialize("logs/log.txt");
 
-    utils::logger::info("Application started.");
+    core::utils::Logger::info("Application started.");
 
     app::Application application;
-    application.run();
+    application.Run();
 
-    utils::LoggerConfig::shutdown();
+    core::utils::LoggerConfig::Shutdown();
 
     return 0;
 }

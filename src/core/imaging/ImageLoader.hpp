@@ -5,16 +5,19 @@
 #include <memory>
 #include <string>
 
-namespace imaging
+namespace core
 {
-    class ImageLoader
+    namespace imaging
     {
-    public:
-        ImageLoader() = default;
-        ~ImageLoader() = default;
+        class ImageLoader
+        {
+        public:
+            ImageLoader() = default;
+            ~ImageLoader() = default;
 
-        std::unique_ptr<SDL_Surface, decltype(&SDL_DestroySurface)> loadImage(const std::string& imagePath);
-    };
+            std::unique_ptr<SDL_Surface, decltype(&SDL_DestroySurface)> LoadImage(const std::string& imagePath);
+        };
+    }
 }
 
 #endif // IMAGING_IMAGELOADER_HPP

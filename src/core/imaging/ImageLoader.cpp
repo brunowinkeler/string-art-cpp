@@ -2,21 +2,24 @@
 #include "core/utils/LoggerConfig.hpp"
 #include <SDL3_image/SDL_image.h>
 
-namespace imaging
+namespace core
 {
-    std::unique_ptr<SDL_Surface, decltype(&SDL_DestroySurface)>
-    ImageLoader::loadImage(const std::string& imagePath)
+    namespace imaging
     {
-        SDL_Surface* surface = IMG_Load(imagePath.c_str());
-        if (!surface)
+        std::unique_ptr<SDL_Surface, decltype(&SDL_DestroySurface)>
+        ImageLoader::LoadImage(const std::string& imagePath)
         {
-            utils::logger::error("Failed to load image: {}", SDL_GetError());
-            return { nullptr, SDL_DestroySurface };
+            SDL_Surface* surface = IMG_Load(imagePath.c_str());
+            if (!surface)
+            {
+                core::utils::Logger::error("Failed to load image: {}", SDL_GetError());
+                return { nullptr, SDL_DestroySurface };
+            }
+
+            core::utils::Logger::info("Image loaded: {}x{} from {}",
+                surface->w, surface->h, imagePath);
+
+            return { surface, SDL_DestroySurface };
         }
-
-        utils::logger::info("Image loaded: {}x{} from {}",
-            surface->w, surface->h, imagePath);
-
-        return { surface, SDL_DestroySurface };
     }
 }

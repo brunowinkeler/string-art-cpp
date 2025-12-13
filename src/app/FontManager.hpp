@@ -10,14 +10,14 @@ namespace app
     class FontManager
     {
     public:
-        static FontManager& getInstance();
+        static FontManager& GetInstance();
 
-        bool initialize();
-        void shutdown();
+        bool Initialize();
+        void Shutdown();
 
-        bool loadFont(const std::string& fontName, const std::string& fontPath, int fontSize);
-        void unloadFont(const std::string& fontName);
-        TTF_Font* getFont(const std::string& fontName) const;
+        bool LoadFont(const std::string& fontName, const std::string& fontPath, int fontSize);
+        void UnloadFont(const std::string& fontName);
+        TTF_Font* GetFont(const std::string& fontName) const;
 
     private:
         std::unordered_map<std::string, TTF_Font*> m_fonts;

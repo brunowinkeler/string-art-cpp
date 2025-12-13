@@ -7,24 +7,24 @@ namespace app
         : m_renderer(nullptr)
         , m_window(nullptr)
     {
-        initialize(configs);
+        Initialize(configs);
     }
 
-    bool Renderer::initialize(const model::Configs& configs)
+    bool Renderer::Initialize(const model::Configs& configs)
     {
         auto windowsFlags = SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE;
 
         m_window = SDL_CreateWindow(configs.windowTitle.c_str(), configs.windowWidth, configs.windowHeight, windowsFlags);
         if (!m_window)
         {
-            utils::logger::error("CreateWindow failed: {}", SDL_GetError());
+            core::utils::Logger::error("CreateWindow failed: {}", SDL_GetError());
             return false;
         }
 
         m_renderer = SDL_CreateRenderer(m_window, nullptr);
         if (!m_renderer)
         {
-            utils::logger::error("CreateRenderer failed: {}", SDL_GetError());
+            core::utils::Logger::error("CreateRenderer failed: {}", SDL_GetError());
             SDL_DestroyWindow(m_window);
             return false;
         }
@@ -34,16 +34,16 @@ namespace app
 
     Renderer::~Renderer()
     {
-        destroy();
+        Destroy();
     }
 
-    void Renderer::clear()
+    void Renderer::Clear()
     {
         SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
         SDL_RenderClear(m_renderer);
     }
 
-    void Renderer::destroy()
+    void Renderer::Destroy()
     {
         if (m_renderer)
         {
@@ -58,17 +58,17 @@ namespace app
         }
     }
 
-    SDL_Renderer* Renderer::getRenderer()
+    SDL_Renderer* Renderer::GetRenderer()
     {
         return m_renderer;
     }
 
-    SDL_Window* Renderer::getWindow()
+    SDL_Window* Renderer::GetWindow()
     {
         return m_window;
     }
 
-    void Renderer::render()
+    void Renderer::Render()
     {
         SDL_RenderClear(m_renderer);
 

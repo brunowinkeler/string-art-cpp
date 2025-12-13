@@ -13,58 +13,58 @@ namespace app
     } // namespace constants
 
     Application::Application()
-        : m_fontManager(app::FontManager::getInstance())
+        : m_fontManager(app::FontManager::GetInstance())
     {
         if (SDL_Init(SDL_INIT_VIDEO) != true)
         {
-            utils::logger::error("SDL_Init failed: {}", SDL_GetError());
+            core::utils::Logger::error("SDL_Init failed: {}", SDL_GetError());
             exit(1);
         }
 
-        if (!m_fontManager.initialize())
+        if (!m_fontManager.Initialize())
         {
-            utils::logger::error("FontManager initialization failed");
+            core::utils::Logger::error("FontManager initialization failed");
             exit(1);
         }
 
-        readConfigs();
-        auto configs = io::ConfigsReader(constants::CONFIGS_FILE_PATH).getConfigs();
+        ReadConfigs();
+        auto configs = io::ConfigsReader(constants::CONFIGS_FILE_PATH).GetConfigs();
         m_renderer = new Renderer(configs);
 
-        loadFonts();
+        LoadFonts();
     }
 
     Application::~Application()
     {
-        m_fontManager.shutdown();
+        m_fontManager.Shutdown();
     }
 
-    void Application::loadFonts()
+    void Application::LoadFonts()
     {
-        if (!m_fontManager.loadFont("default", std::string(Resources::Fonts::DEFAULT.path), 16))
+        if (!m_fontManager.LoadFont("default", std::string(Resources::Fonts::DEFAULT.path), 16))
         {
-            utils::logger::error("Failed to load default font");
+            core::utils::Logger::error("Failed to load default font");
         }
 
-        utils::logger::info("Fonts loaded successfully");
+        core::utils::Logger::info("Fonts loaded successfully");
     }
 
-    void Application::readConfigs()
+    void Application::ReadConfigs()
     {
         io::ConfigsReader configsReader(constants::CONFIGS_FILE_PATH);
-        auto configs = configsReader.getConfigs();
+        auto configs = configsReader.GetConfigs();
 
-        utils::logger::info("Window Title: {}", configs.windowTitle);
-        utils::logger::info("Window Width: {}", configs.windowWidth);
-        utils::logger::info("Window Height: {}", configs.windowHeight);
-        utils::logger::info("Number of Lines to Draw: {}", configs.numLinesToDraw);
-        utils::logger::info("Number of Nails: {}", configs.numNails);
-        utils::logger::info("Input Image Path: {}", configs.inputImagePath);
+        core::utils::Logger::info("Window Title: {}", configs.windowTitle);
+        core::utils::Logger::info("Window Width: {}", configs.windowWidth);
+        core::utils::Logger::info("Window Height: {}", configs.windowHeight);
+        core::utils::Logger::info("Number of Lines to Draw: {}", configs.numLinesToDraw);
+        core::utils::Logger::info("Number of Nails: {}", configs.numNails);
+        core::utils::Logger::info("Input Image Path: {}", configs.inputImagePath);
 
-        utils::logger::info("Configurations read successfully!");
+        core::utils::Logger::info("Configurations read successfully!");
     }
 
-    void Application::run()
+    void Application::Run()
     {
         bool running = true;
         SDL_Event event;
@@ -79,6 +79,6 @@ namespace app
             }
         }
 
-        m_renderer->render();
+        m_renderer->Render();
     }
 }

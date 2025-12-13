@@ -4,17 +4,19 @@
 #include <spdlog/spdlog.h>
 #include <string>
 
-namespace utils
+namespace core
 {
-    namespace logger = spdlog;
-
-    class LoggerConfig
+    namespace utils
     {
-    public:
-        static void initialize(const std::string& log_file = "log.txt");
-        static void shutdown();
-    };
+        namespace Logger = spdlog;
 
+        class LoggerConfig
+        {
+        public:
+            static void Initialize(const std::string& log_file = "log.txt");
+            static void Shutdown();
+        };
+    }
 }
 
 #endif // UTILS_LOGGERCONFIG_HPP

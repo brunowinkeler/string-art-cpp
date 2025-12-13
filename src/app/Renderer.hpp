@@ -12,13 +12,13 @@ namespace app
         Renderer(const model::Configs& configs);
         ~Renderer();
 
-        bool initialize(const model::Configs& configs);
-        void render();
-        void clear();
-        void destroy();
+        bool Initialize(const model::Configs& configs);
+        void Render();
+        void Clear();
+        void Destroy();
 
-        SDL_Renderer* getRenderer();
-        SDL_Window* getWindow();
+        SDL_Renderer* GetRenderer();
+        SDL_Window* GetWindow();
 
     private:
         SDL_Renderer* m_renderer;

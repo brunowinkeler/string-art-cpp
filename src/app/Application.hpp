@@ -11,11 +11,11 @@ namespace app
     public:
         Application();
         ~Application();
-        void run();
+        void Run();
 
     private:
-        void readConfigs();
-        void loadFonts();
+        void ReadConfigs();
+        void LoadFonts();
 
         FontManager& m_fontManager;
         Renderer* m_renderer;

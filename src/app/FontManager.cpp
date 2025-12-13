@@ -3,18 +3,18 @@
 
 namespace app
 {
-    bool FontManager::initialize()
+    bool FontManager::Initialize()
     {
         if (TTF_Init() != true)
         {
-            utils::logger::error("TTF_Init failed: {}", SDL_GetError());
+            core::utils::Logger::error("TTF_Init failed: {}", SDL_GetError());
             TTF_Quit();
             return false;
         }
         return true;
     }
 
-    void FontManager::shutdown()
+    void FontManager::Shutdown()
     {
         for (auto& pair : m_fonts)
         {
@@ -24,13 +24,13 @@ namespace app
         TTF_Quit();
     }
 
-    FontManager& FontManager::getInstance()
+    FontManager& FontManager::GetInstance()
     {
         static FontManager instance;
         return instance;
     }
 
-    bool FontManager::loadFont(const std::string& fontName, const std::string& fontPath, int fontSize)
+    bool FontManager::LoadFont(const std::string& fontName, const std::string& fontPath, int fontSize)
     {
         TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
         if (!font)
@@ -38,11 +38,11 @@ namespace app
             return false;
         }
         m_fonts[fontName] = font;
-        utils::logger::info("Loaded font '{}' from '{}'", fontName, fontPath);
+        core::utils::Logger::info("Loaded font '{}' from '{}'", fontName, fontPath);
         return true;
     }
 
-    void FontManager::unloadFont(const std::string& fontName)
+    void FontManager::UnloadFont(const std::string& fontName)
     {
         auto it = m_fonts.find(fontName);
         if (it != m_fonts.end())
@@ -52,7 +52,7 @@ namespace app
         }
     }
 
-    TTF_Font* FontManager::getFont(const std::string& fontName) const
+    TTF_Font* FontManager::GetFont(const std::string& fontName) const
     {
         auto it = m_fonts.find(fontName);
         return (it != m_fonts.end()) ? it->second : nullptr;
