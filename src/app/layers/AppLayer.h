@@ -20,7 +20,7 @@ public:
 
     void OnDetach() override
     {
-        core::utils::Logger::info("AppLayer Detached!");
+        // Dont include logging here because maybe it will be called after the shutdown of the logger
     }
 
     void OnUpdate(float ts) override

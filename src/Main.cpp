@@ -8,7 +8,7 @@ int main()
     core::utils::LoggerConfig::Initialize("String Art Logger", "logs/log.txt");
 
     core::ApplicationSpecification appSpec;
-    appSpec.Name = "Architecture";
+    appSpec.Name = "String Art";
     appSpec.WindowSpec.Width = 1280;
     appSpec.WindowSpec.Height = 720;
 
