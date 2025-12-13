@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Event.h"
+#include "core/events/Event.h"
+#include <cstdint>
 #include <functional>
 #include <string>
+
+struct SDL_Window;
+struct SDL_Renderer;
 
 namespace core
 {
@@ -27,11 +31,27 @@ namespace core
         void Create();
         void Destroy();
         void Update();
-        void RaiseEvent(Event& event);
-        bool ShouldClose() const;
+
+        SDL_Window* GetNativeWindow() const
+        {
+            return m_Window;
+        }
+
+        SDL_Renderer* GetRenderer() const
+        {
+            return m_Renderer;
+        }
+
+        bool ShouldClose() const
+        {
+            return m_ShouldClose;
+        }
 
     private:
         WindowSpecification m_Specification;
+        SDL_Window* m_Window = nullptr;
+        SDL_Renderer* m_Renderer = nullptr;
+        bool m_ShouldClose = false;
     };
 
 }
