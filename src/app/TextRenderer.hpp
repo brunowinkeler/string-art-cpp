@@ -12,7 +12,7 @@ namespace app
         TextRenderer(SDL_Renderer* renderer);
         ~TextRenderer();
 
-        void renderText(const std::string& fontName, const std::string& text, int x, int y);
+        void RenderText(const std::string& fontName, const std::string& text, int x, int y);
 
     private:
         SDL_Renderer* m_renderer;

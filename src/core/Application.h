@@ -1,0 +1,64 @@
+#pragma once
+
+#include "core/Layer.h"
+#include "core/Window.h"
+#include "core/events/ApplicationEvent.h"
+#include "core/events/Event.h"
+#include <concepts>
+#include <memory>
+#include <string>
+#include <vector>
+
+namespace core
+{
+    struct ApplicationSpecification
+    {
+        std::string Name = "String Art App";
+        WindowSpecification WindowSpec;
+    };
+
+    class Application
+    {
+    public:
+        Application(const ApplicationSpecification& spec);
+        virtual ~Application();
+
+        void Run();
+        void Close();
+
+        void OnEvent(Event& e);
+
+        template<typename TLayer>
+        requires(std::is_base_of_v<Layer, TLayer>)
+        void PushLayer()
+        {
+            m_LayerStack.emplace_back(std::make_unique<TLayer>());
+            m_LayerStack.back()->OnAttach();
+        }
+
+        Window& GetWindow()
+        {
+            return *m_Window;
+        }
+
+        static Application& Get()
+        {
+            return *s_Instance;
+        }
+
+    private:
+        bool OnWindowClose(WindowCloseEvent& e);
+
+    private:
+        ApplicationSpecification m_Specification;
+        std::unique_ptr<Window> m_Window;
+        bool m_Running = true;
+
+        std::vector<std::unique_ptr<Layer>> m_LayerStack;
+
+        static Application* s_Instance;
+    };
+
+    // To be defined in CLIENT
+    Application* CreateApplication(int argc, char** argv);
+}
