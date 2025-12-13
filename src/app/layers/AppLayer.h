@@ -13,7 +13,7 @@ public:
     void OnAttach() override
     {
         core::utils::Logger::info("AppLayer Attached!");
-        
+
         LoadResources();
         ResetSimulationState();
     }
@@ -26,6 +26,11 @@ public:
     void OnUpdate(float ts) override
     {
         // core::utils::Logger::info("AppLayer Update");
+    }
+
+    void OnRender() override
+    {
+        // Render AppLayer stuff
     }
 
 private:

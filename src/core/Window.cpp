@@ -94,15 +94,10 @@ namespace core
 
         if (m_Renderer)
         {
-            SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
-            SDL_RenderClear(m_Renderer);
+            // SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
+            // SDL_RenderClear(m_Renderer);
 
-            // Rendering happens in layers, but the present happens here or in Application?
-            // Usually Application controls the flow.
-            // For now, let's just present here to ensure window works,
-            // but ideally layers draw to this renderer before Present.
-
-            SDL_RenderPresent(m_Renderer);
+            // SDL_RenderPresent(m_Renderer);
         }
     }
 }

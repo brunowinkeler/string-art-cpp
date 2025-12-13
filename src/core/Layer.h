@@ -22,6 +22,9 @@ namespace core
         virtual void OnUpdate(float ts)
         {}
 
+        virtual void OnRender()
+        {}
+
         virtual void OnEvent(Event& event)
         {}
 

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "core/renderer/Renderer.h"
 #include "core/utils/LoggerConfig.hpp"
 
 namespace core
@@ -19,6 +20,8 @@ namespace core
 
         m_Window = std::make_unique<Window>(m_Specification.WindowSpec);
         m_Window->Create();
+
+        Renderer::Init(m_Window->GetRenderer());
     }
 
     Application::~Application()
@@ -29,6 +32,7 @@ namespace core
         }
         m_LayerStack.clear();
 
+        Renderer::Shutdown();
         m_Window->Destroy();
     }
 
@@ -46,6 +50,17 @@ namespace core
             {
                 layer->OnUpdate(timestep);
             }
+
+            // Render
+            Renderer::SetClearColor(0, 0, 0, 255);
+            Renderer::Clear();
+
+            for (auto& layer : m_LayerStack)
+            {
+                layer->OnRender();
+            }
+
+            Renderer::Present();
 
             m_Window->Update();
         }

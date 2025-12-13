@@ -19,6 +19,11 @@ public:
     {
     }
 
+    void OnRender() override
+    {
+        // Render UI/Overlay
+    }
+
     void OnEvent(core::Event& event) override
     {
     }
