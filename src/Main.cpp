@@ -3,7 +3,7 @@
 
 int main()
 {
-    core::utils::LoggerConfig::Initialize("logs/log.txt");
+    core::utils::LoggerConfig::Initialize("String Art Logger", "logs/log.txt");
 
     core::utils::Logger::info("Application started.");
 

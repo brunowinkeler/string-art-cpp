@@ -13,7 +13,7 @@ namespace core
         class LoggerConfig
         {
         public:
-            static void Initialize(const std::string& log_file = "log.txt");
+            static void Initialize(const std::string& logger_name, const std::string& log_file = "log.txt");
             static void Shutdown();
         };
     }
