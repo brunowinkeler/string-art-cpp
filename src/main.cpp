@@ -1,5 +1,5 @@
 #include "app/Application.hpp"
-#include "utils/LoggerConfig.hpp"
+#include "core/utils/LoggerConfig.hpp"
 
 int main()
 {

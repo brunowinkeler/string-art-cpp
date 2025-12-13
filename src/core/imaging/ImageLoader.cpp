@@ -1,5 +1,5 @@
 #include "ImageLoader.hpp"
-#include "utils/LoggerConfig.hpp"
+#include "core/utils/LoggerConfig.hpp"
 #include <SDL3_image/SDL_image.h>
 
 namespace imaging

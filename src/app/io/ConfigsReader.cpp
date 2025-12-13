@@ -1,5 +1,5 @@
 #include "ConfigsReader.hpp"
-#include "utils/LoggerConfig.hpp"
+#include "core/utils/LoggerConfig.hpp"
 #include <fstream>
 #include <nlohmann/json.hpp>
 

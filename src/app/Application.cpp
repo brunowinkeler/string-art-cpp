@@ -1,9 +1,9 @@
 #include "Application.hpp"
 #include "SDL3_ttf/SDL_ttf.h"
 #include "app/FontManager.hpp"
-#include "io/ConfigsReader.hpp"
-#include "utils/LoggerConfig.hpp"
-#include "utils/Resources.hpp"
+#include "app/Resources.hpp"
+#include "app/io/ConfigsReader.hpp"
+#include "core/utils/LoggerConfig.hpp"
 
 namespace app
 {

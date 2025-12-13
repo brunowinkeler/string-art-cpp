@@ -1,5 +1,5 @@
 #include "Renderer.hpp"
-#include "utils/LoggerConfig.hpp"
+#include "core/utils/LoggerConfig.hpp"
 
 namespace app
 {

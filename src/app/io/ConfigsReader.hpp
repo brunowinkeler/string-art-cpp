@@ -1,7 +1,7 @@
 #ifndef IO_CONFIGSREADER_HPP
 #define IO_CONFIGSREADER_HPP
 
-#include "model/Configs.hpp"
+#include "app/model/Configs.hpp"
 #include <string>
 
 namespace io

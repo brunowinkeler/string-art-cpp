@@ -1,5 +1,5 @@
 #include "ImageProcessor.hpp"
-#include "utils/LoggerConfig.hpp"
+#include "core/utils/LoggerConfig.hpp"
 #include <algorithm>
 #include <cmath>
 
