@@ -1,5 +1,7 @@
-#include "Window.h"
-#include "core/events/WindowEvents.h"
+#include "Window.hpp"
+#include "core/events/KeyboardEvents.hpp"
+#include "core/events/MouseEvents.hpp"
+#include "core/events/WindowEvents.hpp"
 #include "core/utils/LoggerConfig.hpp"
 #include <SDL3/SDL.h>
 
@@ -78,6 +80,7 @@ namespace core
                 case SDL_EVENT_QUIT:
                 {
                     WindowCloseEvent e;
+                    utils::Logger::trace(e.ToString());
                     RaiseEvent(e);
                     m_ShouldClose = true;
                     break;
@@ -85,6 +88,50 @@ namespace core
                 case SDL_EVENT_WINDOW_RESIZED:
                 {
                     WindowResizeEvent e(event.window.data1, event.window.data2);
+                    utils::Logger::trace(e.ToString());
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_MOUSE_MOTION:
+                {
+                    MouseMovedEvent e(static_cast<double>(event.motion.x), static_cast<double>(event.motion.y));
+                    // utils::Logger::trace(e.ToString()); // Too verbose for mouse move
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_MOUSE_WHEEL:
+                {
+                    MouseScrolledEvent e(static_cast<double>(event.wheel.x), static_cast<double>(event.wheel.y));
+                    utils::Logger::trace(e.ToString());
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                {
+                    MouseButtonPressedEvent e(static_cast<int>(event.button.button));
+                    utils::Logger::trace(e.ToString());
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_MOUSE_BUTTON_UP:
+                {
+                    MouseButtonReleasedEvent e(static_cast<int>(event.button.button));
+                    utils::Logger::trace(e.ToString());
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_KEY_DOWN:
+                {
+                    bool isRepeat = event.key.repeat != 0;
+                    KeyPressedEvent e(static_cast<uint32_t>(event.key.key), isRepeat);
+                    utils::Logger::trace(e.ToString());
+                    RaiseEvent(e);
+                    break;
+                }
+                case SDL_EVENT_KEY_UP:
+                {
+                    KeyReleasedEvent e(static_cast<uint32_t>(event.key.key));
+                    utils::Logger::trace(e.ToString());
                     RaiseEvent(e);
                     break;
                 }

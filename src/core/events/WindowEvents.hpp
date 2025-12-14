@@ -1,6 +1,7 @@
-#pragma once
+#ifndef CORE_EVENTS_WINDOWEVENTS_HPP
+#define CORE_EVENTS_WINDOWEVENTS_HPP
 
-#include "Event.h"
+#include "Event.hpp"
 #include <sstream>
 
 namespace core
@@ -46,3 +47,5 @@ namespace core
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 }
+
+#endif // CORE_EVENTS_WINDOWEVENTS_HPP

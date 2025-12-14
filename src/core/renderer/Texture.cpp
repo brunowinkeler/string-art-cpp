@@ -1,5 +1,5 @@
-#include "Texture.h"
-#include "Renderer.h"
+#include "Texture.hpp"
+#include "Renderer.hpp"
 #include "core/utils/LoggerConfig.hpp"
 #include <SDL3_image/SDL_image.h>
 

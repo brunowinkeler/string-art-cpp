@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/events/Event.h"
+#include "core/events/Event.hpp"
 #include <cstdint>
 #include <functional>
 #include <string>

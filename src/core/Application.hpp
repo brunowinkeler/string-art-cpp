@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core/Layer.h"
-#include "core/Window.h"
-#include "core/events/Event.h"
-#include "core/events/WindowEvents.h"
+#include "core/Layer.hpp"
+#include "core/Window.hpp"
+#include "core/events/Event.hpp"
+#include "core/events/WindowEvents.hpp"
 #include <concepts>
 #include <memory>
 #include <string>

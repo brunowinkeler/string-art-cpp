@@ -1,6 +1,6 @@
-#include "app/layers/AppLayer.h"
-#include "app/layers/OverlayLayer.h"
-#include "core/Application.h"
+#include "app/layers/AppLayer.hpp"
+#include "app/layers/OverlayLayer.hpp"
+#include "core/Application.hpp"
 #include "core/utils/LoggerConfig.hpp"
 
 int main()

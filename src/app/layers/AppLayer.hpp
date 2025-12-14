@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Layer.h"
+#include "core/Layer.hpp"
 #include "core/utils/LoggerConfig.hpp"
 
 class AppLayer : public core::Layer

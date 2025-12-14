@@ -1,5 +1,5 @@
-#include "Application.h"
-#include "core/renderer/Renderer.h"
+#include "Application.hpp"
+#include "core/renderer/Renderer.hpp"
 #include "core/utils/LoggerConfig.hpp"
 #include <ranges>
 
