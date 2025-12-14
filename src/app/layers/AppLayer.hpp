@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Layer.hpp"
+#include "core/resources/FontManager.hpp"
 #include "core/utils/LoggerConfig.hpp"
 
 class AppLayer : public core::Layer
@@ -37,7 +38,7 @@ private:
     void LoadResources()
     {
         core::utils::Logger::info("Loading textures and fonts for AppLayer...");
-        // FontManager::Get().Load("Arial.ttf");
+        // core::FontManager::Load("Arial", "assets/fonts/arial.ttf", 16);
     }
 
     void ResetSimulationState()

@@ -26,8 +26,10 @@ namespace Resources
 
     namespace Images
     {
-        inline constexpr ImageResource SCREW1 = { "Screw1", "assets/images/screw1.png" };
-        inline constexpr ImageResource SCREW2 = { "Screw2", "assets/images/screw2.png" };
+        inline constexpr ImageResource NAIL1 = { "Nail1", "assets/images/nail1.png" };
+        inline constexpr ImageResource NAIL2 = { "Nail2", "assets/images/nail2.png" };
+        inline constexpr ImageResource NAIL3 = { "Nail3", "assets/images/nail3.png" };
+        inline constexpr ImageResource WOMAN = { "Woman", "assets/images/woman.png" };
     }
 }
 
