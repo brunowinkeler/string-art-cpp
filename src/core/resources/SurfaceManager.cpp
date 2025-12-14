@@ -51,6 +51,5 @@ namespace core
     void SurfaceManager::Clear()
     {
         s_Surfaces.clear();
-        core::utils::Logger::info("Surface cache cleared");
     }
 }

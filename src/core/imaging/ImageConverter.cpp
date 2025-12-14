@@ -22,7 +22,7 @@ namespace core
                 return { nullptr, SDL_DestroySurface };
             }
 
-            if (SDL_LockSurface(graySurface) != 0)
+            if (SDL_LockSurface(graySurface) != true)
             {
                 core::utils::Logger::error("Failed to lock surface: {}", SDL_GetError());
                 SDL_DestroySurface(graySurface);

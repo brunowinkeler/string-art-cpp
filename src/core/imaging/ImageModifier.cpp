@@ -14,7 +14,7 @@ namespace core
                 return;
             }
 
-            if (SDL_LockSurface(surface) != 0)
+            if (SDL_LockSurface(surface) != true)
             {
                 core::utils::Logger::error("Failed to lock surface: {}", SDL_GetError());
                 return;
@@ -63,7 +63,7 @@ namespace core
                 return;
             }
 
-            if (SDL_LockSurface(surface) != 0)
+            if (SDL_LockSurface(surface) != true)
             {
                 core::utils::Logger::error("Failed to lock surface for darkening: {}", SDL_GetError());
                 return;

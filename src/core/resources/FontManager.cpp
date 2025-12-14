@@ -20,7 +20,6 @@ namespace core
     void FontSystem::Shutdown()
     {
         TTF_Quit();
-        core::utils::Logger::info("FontSystem Shutdown");
     }
 
     // --- FontManager ---
