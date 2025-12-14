@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "core/renderer/Renderer.h"
 #include "core/utils/LoggerConfig.hpp"
+#include <ranges>
 
 namespace core
 {
@@ -11,11 +12,12 @@ namespace core
     {
         s_Instance = this;
 
-        // Setup Window Specification
-        m_Specification.WindowSpec.Title = spec.Name;
-        m_Specification.WindowSpec.EventCallback = [this](Event& e)
+        if (m_Specification.WindowSpec.Title.empty())
+            m_Specification.WindowSpec.Title = m_Specification.Name;
+
+        m_Specification.WindowSpec.EventCallback = [this](Event& event)
         {
-            OnEvent(e);
+            GenericEventCallback(event);
         };
 
         m_Window = std::make_unique<Window>(m_Specification.WindowSpec);
@@ -30,6 +32,7 @@ namespace core
         {
             layer->OnDetach();
         }
+
         m_LayerStack.clear();
 
         Renderer::Shutdown();
@@ -38,58 +41,50 @@ namespace core
 
     void Application::Run()
     {
+        m_Running = true;
+        float lastFrameTime = SDL_GetTicks() / 1000.0f;
+
         while (m_Running)
         {
-            float time = 0.0f;
-            float timestep = time;
+            // Poll events
+            m_Window->Update();
 
             if (m_Window->ShouldClose())
-                m_Running = false;
-
-            for (auto& layer : m_LayerStack)
             {
-                layer->OnUpdate(timestep);
+                Stop();
+                break;
             }
 
-            // Render
-            Renderer::SetClearColor(0, 0, 0, 255);
+            float time = SDL_GetTicks() / 1000.0f;
+            float timestep = time - lastFrameTime;
+            lastFrameTime = time;
+
+            // Update layers
+            for (const auto& layer : m_LayerStack)
+                layer->OnUpdate(timestep);
+
             Renderer::Clear();
 
-            for (auto& layer : m_LayerStack)
-            {
+            // Render layers
+            for (const auto& layer : m_LayerStack)
                 layer->OnRender();
-            }
 
             Renderer::Present();
-
-            m_Window->Update();
         }
     }
 
-    void Application::Close()
+    void Application::Stop()
     {
         m_Running = false;
     }
 
-    void Application::OnEvent(Event& e)
+    void Application::GenericEventCallback(Event& event)
     {
-        EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e)
-            {
-                return OnWindowClose(e);
-            });
-
-        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+        for (auto& layer : std::views::reverse(m_LayerStack))
         {
-            if (e.Handled)
+            layer->OnEvent(event);
+            if (event.Handled)
                 break;
-            (*it)->OnEvent(e);
         }
-    }
-
-    bool Application::OnWindowClose(WindowCloseEvent& e)
-    {
-        m_Running = false;
-        return true;
     }
 }

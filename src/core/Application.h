@@ -2,8 +2,8 @@
 
 #include "core/Layer.h"
 #include "core/Window.h"
-#include "core/events/ApplicationEvent.h"
 #include "core/events/Event.h"
+#include "core/events/WindowEvents.h"
 #include <concepts>
 #include <memory>
 #include <string>
@@ -24,9 +24,9 @@ namespace core
         virtual ~Application();
 
         void Run();
-        void Close();
+        void Stop();
 
-        void OnEvent(Event& e);
+        void GenericEventCallback(Event& event);
 
         template<typename TLayer>
         requires(std::is_base_of_v<Layer, TLayer>)
@@ -52,7 +52,7 @@ namespace core
     private:
         ApplicationSpecification m_Specification;
         std::unique_ptr<Window> m_Window;
-        bool m_Running = true;
+        bool m_Running = false;
 
         std::vector<std::unique_ptr<Layer>> m_LayerStack;
 

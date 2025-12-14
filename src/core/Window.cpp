@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "core/events/ApplicationEvent.h"
+#include "core/events/WindowEvents.h"
 #include "core/utils/LoggerConfig.hpp"
 #include <SDL3/SDL.h>
 
@@ -46,7 +46,7 @@ namespace core
         }
 
         // VSync
-        // SDL_SetRenderVSync(m_Renderer, m_Specification.VSync ? 1 : 0);
+        SDL_SetRenderVSync(m_Renderer, m_Specification.VSync ? 1 : 0);
 
         core::utils::Logger::info("Window created: {} ({}, {})", m_Specification.Title, m_Specification.Width, m_Specification.Height);
     }
@@ -78,26 +78,25 @@ namespace core
                 case SDL_EVENT_QUIT:
                 {
                     WindowCloseEvent e;
-                    m_Specification.EventCallback(e);
+                    RaiseEvent(e);
                     m_ShouldClose = true;
                     break;
                 }
                 case SDL_EVENT_WINDOW_RESIZED:
                 {
                     WindowResizeEvent e(event.window.data1, event.window.data2);
-                    m_Specification.EventCallback(e);
+                    RaiseEvent(e);
                     break;
                 }
-                    // TODO: Add Key and Mouse events here
+                default:
+                    break;
             }
         }
+    }
 
-        if (m_Renderer)
-        {
-            // SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
-            // SDL_RenderClear(m_Renderer);
-
-            // SDL_RenderPresent(m_Renderer);
-        }
+    void Window::RaiseEvent(Event& event)
+    {
+        if (m_Specification.EventCallback)
+            m_Specification.EventCallback(event);
     }
 }

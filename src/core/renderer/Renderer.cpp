@@ -14,12 +14,6 @@ namespace core
         s_Renderer = nullptr;
     }
 
-    void Renderer::SetClearColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-    {
-        if (s_Renderer)
-            SDL_SetRenderDrawColor(s_Renderer, r, g, b, a);
-    }
-
     void Renderer::SetDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     {
         if (s_Renderer)
@@ -29,7 +23,10 @@ namespace core
     void Renderer::Clear()
     {
         if (s_Renderer)
+        {
+            SDL_SetRenderDrawColor(s_Renderer, 0, 0, 0, 255);
             SDL_RenderClear(s_Renderer);
+        }
     }
 
     void Renderer::Present()

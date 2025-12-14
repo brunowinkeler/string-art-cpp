@@ -31,6 +31,7 @@ namespace core
         void Create();
         void Destroy();
         void Update();
+        void RaiseEvent(Event& event);
 
         SDL_Window* GetNativeWindow() const
         {
