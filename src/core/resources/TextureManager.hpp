@@ -11,16 +11,9 @@ namespace core
     class TextureManager
     {
     public:
-        // Retorna uma textura do cache ou carrega se não existir
         static std::shared_ptr<Texture2D> Load(const std::string& name, const std::string& path);
-
-        // Retorna uma textura já carregada
         static std::shared_ptr<Texture2D> Get(const std::string& name);
-
-        // Remove uma textura do cache
         static void Unload(const std::string& name);
-
-        // Limpa todo o cache
         static void Clear();
 
     private:

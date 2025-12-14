@@ -11,16 +11,9 @@ namespace core
     class SurfaceManager
     {
     public:
-        // Retorna uma surface do cache ou carrega se não existir
         static std::shared_ptr<SDL_Surface> Load(const std::string& name, const std::string& path);
-
-        // Retorna uma surface já carregada
         static std::shared_ptr<SDL_Surface> Get(const std::string& name);
-
-        // Remove uma surface do cache
         static void Unload(const std::string& name);
-
-        // Limpa todo o cache
         static void Clear();
 
     private:

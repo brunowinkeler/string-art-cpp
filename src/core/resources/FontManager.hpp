@@ -8,7 +8,6 @@
 
 namespace core
 {
-    // Responsável apenas pelo ciclo de vida da biblioteca TTF
     class FontSystem
     {
     public:
@@ -16,7 +15,6 @@ namespace core
         static void Shutdown();
     };
 
-    // Responsável apenas pelo cache e acesso aos recursos de fonte
     class FontManager
     {
     public:
@@ -26,8 +24,6 @@ namespace core
         static void Clear();
 
     private:
-        // Usando raw pointer aqui pois TTF_Font é opaco e gerenciado por TTF_CloseFont
-        // Poderíamos usar unique_ptr com custom deleter para ser mais C++ moderno
         static std::unordered_map<std::string, TTF_Font*> s_Fonts;
     };
 }

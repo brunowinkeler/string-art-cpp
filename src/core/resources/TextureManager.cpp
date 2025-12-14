@@ -7,13 +7,11 @@ namespace core
 
     std::shared_ptr<Texture2D> TextureManager::Load(const std::string& name, const std::string& path)
     {
-        // Se já existe, retorna o cache
         if (s_Textures.find(name) != s_Textures.end())
         {
             return s_Textures[name];
         }
 
-        // Carrega nova textura
         auto texture = std::make_shared<Texture2D>(path);
         if (texture->GetNativeTexture())
         {
