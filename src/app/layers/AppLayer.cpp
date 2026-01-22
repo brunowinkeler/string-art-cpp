@@ -1,5 +1,10 @@
 #include "AppLayer.hpp"
+#include "core/events/KeyboardEvents.hpp"
 #include "core/events/WindowEvents.hpp"
+#include "core/imaging/ImageConverter.hpp"
+#include "core/imaging/ImageModifier.hpp"
+#include "core/resources/SurfaceManager.hpp"
+#include "core/utils/LoggerConfig.hpp"
 
 namespace app
 {
@@ -10,74 +15,158 @@ namespace app
     void AppLayer::OnAttach()
     {
         core::utils::Logger::info("AppLayer Attached!");
-
         LoadResources();
-        ResetSimulationState();
+        InitializeGenerator();
     }
 
     void AppLayer::OnDetach()
     {
-        // Dont include logging here because maybe it will be called after the shutdown of the logger
     }
 
     void AppLayer::OnUpdate(float /*ts*/)
     {
-        // core::utils::Logger::info("AppLayer Update");
+        auto& state = m_Generator.GetState();
+        if (state.isRunning && !state.isComplete)
+        {
+            for (int i = 0; i < m_LinesPerFrame; ++i)
+            {
+                if (!m_Generator.Step())
+                    break;
+            }
+        }
     }
 
     void AppLayer::OnRender()
     {
-        core::Renderer::SetDrawColor(30, 30, 30, 255);
+        core::Renderer::SetDrawColor(255, 255, 255, 255);
         core::Renderer::Clear();
 
-        if (m_ProcessedTexture)
-        {
-            float x = (800.0f - m_ProcessedTexture->GetWidth()) / 2.0f;
-            float y = (600.0f - m_ProcessedTexture->GetHeight()) / 2.0f;
-            core::Renderer::DrawTexture(m_ProcessedTexture, x, y,
-                (float)m_ProcessedTexture->GetWidth(),
-                (float)m_ProcessedTexture->GetHeight());
-        }
+        RenderStringArt();
+        RenderNails();
     }
 
     void AppLayer::LoadResources()
     {
-        core::utils::Logger::info("Loading textures and fonts for AppLayer...");
+        core::utils::Logger::info("Loading resources...");
 
-        auto originalSurface = core::SurfaceManager::Load("OriginalImage", "assets/images/woman.png");
-        if (originalSurface)
+        auto surface = core::SurfaceManager::Load("OriginalImage", "assets/images/woman.png");
+        if (!surface)
         {
-            auto graySurfacePtr = core::imaging::ImageConverter::ConvertToGrayscale(originalSurface.get());
-
-            if (graySurfacePtr)
-            {
-                int radius = std::min(graySurfacePtr->w, graySurfacePtr->h) / 2;
-                core::imaging::ImageModifier::ApplyCircularMask(graySurfacePtr.get(), radius);
-
-                m_ProcessedTexture = std::make_shared<core::Texture2D>(graySurfacePtr.get());
-
-                core::utils::Logger::info("Image processed successfully!");
-            }
+            core::utils::Logger::error("Failed to load image");
+            return;
         }
-        else
+
+        auto graySurface = core::imaging::ImageConverter::ConvertToGrayscale(surface.get());
+        if (!graySurface)
         {
-            core::utils::Logger::error("Failed to load 'monalisa.jpg'. Make sure the file exists in assets/images/");
+            core::utils::Logger::error("Failed to convert to grayscale");
+            return;
+        }
+
+        int radius = std::min(graySurface->w, graySurface->h) / 2;
+        core::imaging::ImageModifier::ApplyCircularMask(graySurface.get(), radius);
+
+        m_SourceSurface = std::shared_ptr<SDL_Surface>(graySurface.release(), SDL_DestroySurface);
+        m_SourceTexture = std::make_shared<core::Texture2D>(m_SourceSurface.get());
+
+        core::utils::Logger::info("Resources loaded successfully");
+    }
+
+    void AppLayer::InitializeGenerator()
+    {
+        if (!m_SourceSurface)
+        {
+            core::utils::Logger::error("Cannot initialize generator: no source surface");
+            return;
+        }
+
+        m_Generator.Initialize(m_SourceSurface.get(), m_NumNails, m_MaxLines);
+
+        m_OffsetX = (1280.0f - m_SourceSurface->w) / 2.0f;
+        m_OffsetY = (720.0f - m_SourceSurface->h) / 2.0f;
+
+        core::utils::Logger::info("Generator initialized with {} nails, {} max lines", m_NumNails, m_MaxLines);
+    }
+
+    void AppLayer::RenderStringArt()
+    {
+        if (!m_Generator.IsInitialized())
+            return;
+
+        const auto& state = m_Generator.GetState();
+        const auto& nailCircle = m_Generator.GetNailCircle();
+
+        core::Renderer::SetDrawColor(0, 0, 0, 20);
+
+        for (size_t i = 1; i < state.path.size(); ++i)
+        {
+            const auto& from = nailCircle.GetNail(state.path[i - 1]);
+            const auto& to = nailCircle.GetNail(state.path[i]);
+
+            core::Renderer::DrawLine(
+                m_OffsetX + from.m_x,
+                m_OffsetY + from.m_y,
+                m_OffsetX + to.m_x,
+                m_OffsetY + to.m_y);
         }
     }
 
-    void app::AppLayer::ResetSimulationState()
+    void AppLayer::RenderNails()
     {
-        core::utils::Logger::info("Simulation state reset.");
+        if (!m_Generator.IsInitialized())
+            return;
+
+        const auto& nails = m_Generator.GetNailCircle().GetNails();
+
+        core::Renderer::SetDrawColor(100, 100, 100, 255);
+
+        for (const auto& nail : nails)
+        {
+            float x = m_OffsetX + nail.m_x;
+            float y = m_OffsetY + nail.m_y;
+            core::Renderer::FillRect(x - 2, y - 2, 4, 4);
+        }
     }
 
     void AppLayer::OnEvent(core::Event& event)
     {
         core::EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<core::WindowResizeEvent>([](core::WindowResizeEvent& e)
+
+        dispatcher.Dispatch<core::WindowResizeEvent>([this](core::WindowResizeEvent& e)
             {
-                core::utils::Logger::info("Window resized to: {}x{}", e.GetWidth(), e.GetHeight());
+                if (m_SourceSurface)
+                {
+                    m_OffsetX = (e.GetWidth() - m_SourceSurface->w) / 2.0f;
+                    m_OffsetY = (e.GetHeight() - m_SourceSurface->h) / 2.0f;
+                }
                 return false;
             });
-        // core::utils::Logger::info("AppLayer received event: {}", event.ToString());
+
+        dispatcher.Dispatch<core::KeyPressedEvent>([this](core::KeyPressedEvent& e)
+            {
+                if (e.IsRepeat())
+                    return false;
+
+                switch (e.GetKeyCode())
+                {
+                    case SDLK_SPACE:
+                    {
+                        auto& state = const_cast<model::SimulationState&>(m_Generator.GetState());
+                        state.isRunning = !state.isRunning;
+                        core::utils::Logger::info("Simulation {}", state.isRunning ? "started" : "paused");
+                        break;
+                    }
+                    case SDLK_R:
+                    {
+                        m_Generator.Reset();
+                        InitializeGenerator();
+                        core::utils::Logger::info("Simulation reset");
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                return false;
+            });
     }
 } // namespace app

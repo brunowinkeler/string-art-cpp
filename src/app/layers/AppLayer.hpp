@@ -1,13 +1,11 @@
 #ifndef STRING_ART_CPP_APP_LAYERS_APPLAYER_HPP
 #define STRING_ART_CPP_APP_LAYERS_APPLAYER_HPP
 
+#include "app/algorithm/StringArtGenerator.hpp"
 #include "core/Layer.hpp"
-#include "core/imaging/ImageConverter.hpp"
-#include "core/imaging/ImageModifier.hpp"
 #include "core/renderer/Renderer.hpp"
-#include "core/resources/FontManager.hpp"
-#include "core/resources/SurfaceManager.hpp"
-#include "core/utils/LoggerConfig.hpp"
+#include "core/renderer/Texture.hpp"
+#include <memory>
 
 namespace app
 {
@@ -19,12 +17,24 @@ namespace app
         void OnDetach() override;
         void OnUpdate(float ts) override;
         void OnRender() override;
+        void OnEvent(core::Event& event) override;
 
     private:
         void LoadResources();
-        void ResetSimulationState();
-        void OnEvent(core::Event& event) override;
-        std::shared_ptr<core::Texture2D> m_ProcessedTexture;
+        void InitializeGenerator();
+        void RenderStringArt();
+        void RenderNails();
+
+        algorithm::StringArtGenerator m_Generator;
+        std::shared_ptr<SDL_Surface> m_SourceSurface;
+        std::shared_ptr<core::Texture2D> m_SourceTexture;
+
+        int m_NumNails = 200;
+        int m_MaxLines = 2000;
+        int m_LinesPerFrame = 5;
+
+        float m_OffsetX = 0.0f;
+        float m_OffsetY = 0.0f;
     };
 } // namespace app
 
