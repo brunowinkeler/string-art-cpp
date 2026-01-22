@@ -89,13 +89,15 @@ namespace app
             return;
         }
 
-        m_Generator.Initialize(m_SourceSurface.get(), m_Configs.numNails, m_Configs.numLinesToDraw);
+        m_Generator.Initialize(
+            m_SourceSurface.get(),
+            m_Configs.numNails,
+            m_Configs.numLinesToDraw,
+            m_Configs.darkenAmount,
+            m_Configs.minNailDistance);
 
         m_OffsetX = (m_Configs.windowWidth - m_SourceSurface->w) / 2.0f;
         m_OffsetY = (m_Configs.windowHeight - m_SourceSurface->h) / 2.0f;
-
-        core::utils::Logger::info("Generator ready: {} nails, {} max lines",
-            m_Configs.numNails, m_Configs.numLinesToDraw);
     }
 
     void AppLayer::RenderStringArt()

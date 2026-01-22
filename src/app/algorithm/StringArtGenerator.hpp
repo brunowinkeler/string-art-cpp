@@ -16,7 +16,8 @@ namespace app::algorithm
     public:
         StringArtGenerator() = default;
 
-        void Initialize(SDL_Surface* sourceSurface, int numNails, int maxLines);
+        void Initialize(SDL_Surface* sourceSurface, int numNails, int maxLines,
+            int darkenAmount = 25, int minNailDistance = 20);
         bool Step();
         void RunComplete();
         void Reset();

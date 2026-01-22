@@ -5,7 +5,8 @@
 
 namespace app::algorithm
 {
-    void StringArtGenerator::Initialize(SDL_Surface* sourceSurface, int numNails, int maxLines)
+    void StringArtGenerator::Initialize(SDL_Surface* sourceSurface, int numNails, int maxLines,
+        int darkenAmount, int minNailDistance)
     {
         if (!sourceSurface)
         {
@@ -13,7 +14,6 @@ namespace app::algorithm
             return;
         }
 
-        // Create a working copy of the source surface
         SDL_Surface* copy = SDL_ConvertSurface(sourceSurface, sourceSurface->format);
         if (!copy)
         {
@@ -22,24 +22,23 @@ namespace app::algorithm
         }
         m_WorkingSurface.reset(copy);
 
-        // Calculate circle parameters based on image dimensions
         int centerX = sourceSurface->w / 2;
         int centerY = sourceSurface->h / 2;
-        int radius = std::min(sourceSurface->w, sourceSurface->h) / 2 - 5; // Small margin
+        int radius = std::min(sourceSurface->w, sourceSurface->h) / 2 - 5;
 
-        // Generate nails around the circle
         m_NailCircle.Generate(centerX, centerY, radius, numNails);
 
-        // Initialize simulation state
         m_State.Reset();
         m_State.maxLines = maxLines;
+        m_State.minNailDistance = minNailDistance;
         m_State.currentNailIndex = 0;
-        m_State.path.push_back(0); // Start at nail 0
+        m_State.path.push_back(0);
 
+        m_DarkenAmount = darkenAmount;
         m_Initialized = true;
 
-        core::utils::Logger::info("StringArtGenerator initialized: {} nails, {} max lines, radius {}",
-            numNails, maxLines, radius);
+        core::utils::Logger::info("StringArtGenerator: {} nails, {} lines, darken={}, minDist={}",
+            numNails, maxLines, darkenAmount, minNailDistance);
     }
 
     bool StringArtGenerator::Step()
