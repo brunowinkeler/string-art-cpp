@@ -2,6 +2,7 @@
 #define STRING_ART_CPP_APP_LAYERS_APPLAYER_HPP
 
 #include "app/algorithm/StringArtGenerator.hpp"
+#include "app/model/Configs.hpp"
 #include "core/Layer.hpp"
 #include "core/renderer/Renderer.hpp"
 #include "core/renderer/Texture.hpp"
@@ -20,18 +21,15 @@ namespace app
         void OnEvent(core::Event& event) override;
 
     private:
+        void LoadConfigs();
         void LoadResources();
         void InitializeGenerator();
         void RenderStringArt();
         void RenderNails();
 
+        model::Configs m_Configs;
         algorithm::StringArtGenerator m_Generator;
         std::shared_ptr<SDL_Surface> m_SourceSurface;
-        std::shared_ptr<core::Texture2D> m_SourceTexture;
-
-        int m_NumNails = 200;
-        int m_MaxLines = 2000;
-        int m_LinesPerFrame = 5;
 
         float m_OffsetX = 0.0f;
         float m_OffsetY = 0.0f;

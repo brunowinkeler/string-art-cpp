@@ -1,8 +1,11 @@
 {
     "windowTitle": "String Art Generator",
-    "windowWidth": 960,
-    "windowHeight": 640,
-    "numLinesToDraw": 3000,
-    "numNails": 360,
-    "inputImagePath": "input.png"
+    "windowWidth": 1280,
+    "windowHeight": 720,
+    "numNails": 200,
+    "numLinesToDraw": 2000,
+    "linesPerFrame": 5,
+    "darkenAmount": 25,
+    "minNailDistance": 20,
+    "inputImagePath": "assets/images/woman.png"
 }

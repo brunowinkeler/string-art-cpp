@@ -1,4 +1,5 @@
 #include "AppLayer.hpp"
+#include "app/io/ConfigsReader.hpp"
 #include "core/events/KeyboardEvents.hpp"
 #include "core/events/WindowEvents.hpp"
 #include "core/imaging/ImageConverter.hpp"
@@ -15,6 +16,7 @@ namespace app
     void AppLayer::OnAttach()
     {
         core::utils::Logger::info("AppLayer Attached!");
+        LoadConfigs();
         LoadResources();
         InitializeGenerator();
     }
@@ -28,7 +30,7 @@ namespace app
         auto& state = m_Generator.GetState();
         if (state.isRunning && !state.isComplete)
         {
-            for (int i = 0; i < m_LinesPerFrame; ++i)
+            for (int i = 0; i < m_Configs.linesPerFrame; ++i)
             {
                 if (!m_Generator.Step())
                     break;
@@ -45,14 +47,22 @@ namespace app
         RenderNails();
     }
 
+    void AppLayer::LoadConfigs()
+    {
+        io::ConfigsReader reader;
+        m_Configs = reader.GetConfigs();
+        core::utils::Logger::info("Using config: {} nails, {} lines, {} per frame",
+            m_Configs.numNails, m_Configs.numLinesToDraw, m_Configs.linesPerFrame);
+    }
+
     void AppLayer::LoadResources()
     {
-        core::utils::Logger::info("Loading resources...");
+        core::utils::Logger::info("Loading image: {}", m_Configs.inputImagePath);
 
-        auto surface = core::SurfaceManager::Load("OriginalImage", "assets/images/woman.png");
+        auto surface = core::SurfaceManager::Load("OriginalImage", m_Configs.inputImagePath);
         if (!surface)
         {
-            core::utils::Logger::error("Failed to load image");
+            core::utils::Logger::error("Failed to load image: {}", m_Configs.inputImagePath);
             return;
         }
 
@@ -67,9 +77,8 @@ namespace app
         core::imaging::ImageModifier::ApplyCircularMask(graySurface.get(), radius);
 
         m_SourceSurface = std::shared_ptr<SDL_Surface>(graySurface.release(), SDL_DestroySurface);
-        m_SourceTexture = std::make_shared<core::Texture2D>(m_SourceSurface.get());
 
-        core::utils::Logger::info("Resources loaded successfully");
+        core::utils::Logger::info("Image loaded: {}x{}", m_SourceSurface->w, m_SourceSurface->h);
     }
 
     void AppLayer::InitializeGenerator()
@@ -80,12 +89,13 @@ namespace app
             return;
         }
 
-        m_Generator.Initialize(m_SourceSurface.get(), m_NumNails, m_MaxLines);
+        m_Generator.Initialize(m_SourceSurface.get(), m_Configs.numNails, m_Configs.numLinesToDraw);
 
-        m_OffsetX = (1280.0f - m_SourceSurface->w) / 2.0f;
-        m_OffsetY = (720.0f - m_SourceSurface->h) / 2.0f;
+        m_OffsetX = (m_Configs.windowWidth - m_SourceSurface->w) / 2.0f;
+        m_OffsetY = (m_Configs.windowHeight - m_SourceSurface->h) / 2.0f;
 
-        core::utils::Logger::info("Generator initialized with {} nails, {} max lines", m_NumNails, m_MaxLines);
+        core::utils::Logger::info("Generator ready: {} nails, {} max lines",
+            m_Configs.numNails, m_Configs.numLinesToDraw);
     }
 
     void AppLayer::RenderStringArt()
