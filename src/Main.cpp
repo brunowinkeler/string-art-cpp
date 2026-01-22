@@ -1,5 +1,4 @@
 #include "app/layers/AppLayer.hpp"
-#include "app/layers/OverlayLayer.hpp"
 #include "core/Application.hpp"
 #include "core/utils/LoggerConfig.hpp"
 
@@ -13,8 +12,7 @@ int main()
     appSpec.WindowSpec.Height = 720;
 
     core::Application application(appSpec);
-    application.PushLayer<AppLayer>();
-    application.PushLayer<OverlayLayer>();
+    application.PushLayer<app::AppLayer>();
     application.Run();
 
     core::utils::LoggerConfig::Shutdown();
