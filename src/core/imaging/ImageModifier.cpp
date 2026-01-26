@@ -99,5 +99,46 @@ namespace core
 
             SDL_UnlockSurface(surface);
         }
+
+        std::unique_ptr<SDL_Surface, decltype(&SDL_DestroySurface)>
+        ImageModifier::ScaleToFit(SDL_Surface* surface, int maxWidth, int maxHeight)
+        {
+            if (!surface)
+            {
+                return { nullptr, SDL_DestroySurface };
+            }
+
+            float scaleX = static_cast<float>(maxWidth) / surface->w;
+            float scaleY = static_cast<float>(maxHeight) / surface->h;
+            float scale = std::min(scaleX, scaleY);
+
+            if (scale >= 1.0f)
+            {
+                SDL_Surface* copy = SDL_ConvertSurface(surface, surface->format);
+                return { copy, SDL_DestroySurface };
+            }
+
+            int newWidth = static_cast<int>(surface->w * scale);
+            int newHeight = static_cast<int>(surface->h * scale);
+
+            SDL_Surface* scaled = SDL_CreateSurface(newWidth, newHeight, surface->format);
+            if (!scaled)
+            {
+                core::utils::Logger::error("Failed to create scaled surface: {}", SDL_GetError());
+                return { nullptr, SDL_DestroySurface };
+            }
+
+            if (!SDL_BlitSurfaceScaled(surface, nullptr, scaled, nullptr, SDL_SCALEMODE_LINEAR))
+            {
+                core::utils::Logger::error("Failed to scale surface: {}", SDL_GetError());
+                SDL_DestroySurface(scaled);
+                return { nullptr, SDL_DestroySurface };
+            }
+
+            core::utils::Logger::info("Image scaled from {}x{} to {}x{}",
+                surface->w, surface->h, newWidth, newHeight);
+
+            return { scaled, SDL_DestroySurface };
+        }
     }
 }

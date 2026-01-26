@@ -24,15 +24,24 @@ namespace app
         void LoadConfigs();
         void LoadResources();
         void InitializeGenerator();
-        void RenderStringArt();
-        void RenderNails();
+        void UpdateLayout();
+
+        void RenderSourceCircle();
+        void RenderReconstructedCircle();
+        void RenderNails(float offsetX, float offsetY);
 
         model::Configs m_Configs;
         algorithm::StringArtGenerator m_Generator;
         std::shared_ptr<SDL_Surface> m_SourceSurface;
+        std::shared_ptr<core::Texture2D> m_WorkingTexture;
+        SDL_Texture* m_SourceTexture = nullptr;
 
-        float m_OffsetX = 0.0f;
-        float m_OffsetY = 0.0f;
+        float m_Zoom = 1.0f;
+        float m_LeftOffsetX = 0.0f;
+        float m_LeftOffsetY = 0.0f;
+        float m_RightOffsetX = 0.0f;
+        float m_RightOffsetY = 0.0f;
+        int m_CircleRadius = 0;
     };
 } // namespace app
 

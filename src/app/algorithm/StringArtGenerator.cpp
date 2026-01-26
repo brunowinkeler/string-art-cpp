@@ -121,19 +121,19 @@ namespace app::algorithm
         int bestNail = -1;
         int bestScore = std::numeric_limits<int>::min();
         int numNails = m_NailCircle.GetCount();
+        int validNailsChecked = 0;
 
         for (int i = 0; i < numNails; ++i)
         {
-            // Skip current nail
             if (i == m_State.currentNailIndex)
                 continue;
 
-            // Skip nails too close (to avoid very short lines)
             int distance = std::abs(i - m_State.currentNailIndex);
-            distance = std::min(distance, numNails - distance); // Handle wrap-around
+            distance = std::min(distance, numNails - distance);
             if (distance < m_State.minNailDistance)
                 continue;
 
+            validNailsChecked++;
             int score = CalculateLineScore(m_State.currentNailIndex, i);
 
             if (score > bestScore)
@@ -141,6 +141,12 @@ namespace app::algorithm
                 bestScore = score;
                 bestNail = i;
             }
+        }
+
+        if (m_State.linesDrawn < 5)
+        {
+            core::utils::Logger::info("FindBestNail: checked {} valid nails, best={} score={}",
+                validNailsChecked, bestNail, bestScore);
         }
 
         return bestNail;
