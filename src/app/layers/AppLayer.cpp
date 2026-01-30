@@ -21,7 +21,13 @@ namespace app
     }
 
     void AppLayer::OnDetach()
-    {}
+    {
+        if (m_SourceTexture)
+        {
+            SDL_DestroyTexture(m_SourceTexture);
+            m_SourceTexture = nullptr;
+        }
+    }
 
     void AppLayer::OnUpdate(float)
     {
@@ -75,16 +81,16 @@ namespace app
                 {
                     case SDLK_SPACE:
                     {
-                        auto& state = const_cast<model::SimulationState&>(m_Generator.GetState());
+                        const auto& state = m_Generator.GetState();
                         if (!state.isRunning)
                         {
-                            state.isRunning = true;
+                            m_Generator.Start();
                             spdlog::info("Started simulation");
                         }
                         else
                         {
-                            state.isRunning = !state.isRunning;
-                            spdlog::info(state.isRunning ? "Resumed" : "Paused");
+                            m_Generator.ToggleRunning();
+                            spdlog::info(m_Generator.GetState().isRunning ? "Resumed" : "Paused");
                         }
                     }
                     break;
@@ -206,8 +212,8 @@ namespace app
         SDL_SetRenderDrawColor(renderer, 60, 60, 60, 255);
         for (int i = 0; i < 360; ++i)
         {
-            float a1 = i * M_PI / 180.0f;
-            float a2 = (i + 1) * M_PI / 180.0f;
+            float a1 = i * std::numbers::pi_v<float> / 180.0f;
+            float a2 = (i + 1) * std::numbers::pi_v<float> / 180.0f;
             SDL_RenderLine(renderer,
                 cx + radius * std::cos(a1), cy + radius * std::sin(a1),
                 cx + radius * std::cos(a2), cy + radius * std::sin(a2));

@@ -13,7 +13,7 @@ namespace app::algorithm
 
         for (int i = 0; i < numNails; ++i)
         {
-            double angle = (2.0 * M_PI * i) / numNails;
+            double angle = (2.0 * std::numbers::pi * i) / numNails;
             model::Nail nail;
             nail.m_x = static_cast<int>(centerX + radius * std::cos(angle));
             nail.m_y = static_cast<int>(centerY + radius * std::sin(angle));

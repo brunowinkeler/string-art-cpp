@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_RENDERER_HPP
+#define CORE_RENDERER_HPP
 
 #include "Texture.hpp"
 #include <SDL3/SDL.h>
@@ -35,3 +36,5 @@ namespace core
         static SDL_Renderer* s_Renderer;
     };
 }
+
+#endif // CORE_RENDERER_HPP

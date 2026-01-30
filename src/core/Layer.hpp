@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_LAYER_HPP
+#define CORE_LAYER_HPP
 
 #include "core/events/Event.hpp"
 
@@ -37,3 +38,5 @@ namespace core
         std::string m_DebugName;
     };
 }
+
+#endif // CORE_LAYER_HPP

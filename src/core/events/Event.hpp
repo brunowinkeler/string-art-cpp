@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_EVENTS_EVENT_HPP
+#define CORE_EVENTS_EVENT_HPP
 
 #include <functional>
 #include <string>
@@ -103,4 +104,6 @@ namespace core
     {
         return os << e.ToString();
     }
-}
+};
+
+#endif // CORE_EVENTS_EVENT_HPP

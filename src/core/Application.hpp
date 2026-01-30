@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_APPLICATION_HPP
+#define CORE_APPLICATION_HPP
 
 #include "core/Layer.hpp"
 #include "core/Window.hpp"
@@ -47,9 +48,6 @@ namespace core
         }
 
     private:
-        bool OnWindowClose(WindowCloseEvent& e);
-
-    private:
         ApplicationSpecification m_Specification;
         std::unique_ptr<Window> m_Window;
         bool m_Running = false;
@@ -58,7 +56,6 @@ namespace core
 
         static Application* s_Instance;
     };
-
-    // To be defined in CLIENT
-    Application* CreateApplication(int argc, char** argv);
 }
+
+#endif // CORE_APPLICATION_HPP

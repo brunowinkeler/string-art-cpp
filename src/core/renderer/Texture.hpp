@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_RENDERER_TEXTURE_HPP
+#define CORE_RENDERER_TEXTURE_HPP
 
 #include <memory>
 #include <string>
@@ -36,3 +37,5 @@ namespace core
         SDL_Texture* m_Texture;
     };
 }
+
+#endif // CORE_RENDERER_TEXTURE_HPP

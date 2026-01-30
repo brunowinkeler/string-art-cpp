@@ -22,6 +22,12 @@ namespace app::algorithm
         void RunComplete();
         void Reset();
 
+        // Simulation control methods
+        void Start();
+        void Pause();
+        void Resume();
+        void ToggleRunning();
+
         const model::SimulationState& GetState() const
         {
             return m_State;

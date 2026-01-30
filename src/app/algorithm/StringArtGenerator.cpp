@@ -116,6 +116,32 @@ namespace app::algorithm
         m_Initialized = false;
     }
 
+    void StringArtGenerator::Start()
+    {
+        if (!m_Initialized)
+            return;
+        m_State.isRunning = true;
+    }
+
+    void StringArtGenerator::Pause()
+    {
+        m_State.isRunning = false;
+    }
+
+    void StringArtGenerator::Resume()
+    {
+        if (!m_Initialized || m_State.isComplete)
+            return;
+        m_State.isRunning = true;
+    }
+
+    void StringArtGenerator::ToggleRunning()
+    {
+        if (!m_Initialized)
+            return;
+        m_State.isRunning = !m_State.isRunning;
+    }
+
     int StringArtGenerator::FindBestNail()
     {
         int bestNail = -1;
