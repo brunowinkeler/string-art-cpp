@@ -11,7 +11,8 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/linux-debug/Debug",
+            // The app resolves assets/, configurations/ and logs/ relative to the CWD.
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
